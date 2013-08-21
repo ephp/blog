@@ -1,0 +1,24 @@
+{
+    "name": "ephp/blog",
+    "type": "symfony-bundle",
+    "description": "Blog per Symfony",
+    "keywords": ["blog", "symfony", "symfony bundle", "bundle", "ephp", "symfony-2.3"],
+    "homepage": "https://github.com/ephp/blog",
+    "license": "MIT",
+    "authors": [
+            {
+                "name": "Ephraim Pepe",
+                "email": "ephraim.pepe@gmail.com"
+            }
+    ],
+    "require": {
+            "php": ">=5.4",
+            "symfony/framework-bundle": "2.*",
+            "ephp/utility": "master"
+    },
+    "autoload": {
+            "psr-0": { "Ephp\\BlogBundle": "" }
+    },
+    "target-dir": "Ephp/BlogBundle",
+    "minimum-stability": "dev"
+}
