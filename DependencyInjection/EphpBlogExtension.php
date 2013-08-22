@@ -21,7 +21,10 @@ class EphpBlogExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
+        
+        $container->setParameter('ephp_blog.post.class', $config['post_class']);
+        $container->setParameter('ephp_blog.post.namespace', '\\'.$config['post_class']);
+        
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }

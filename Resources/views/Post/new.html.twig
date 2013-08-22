@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h1>Post creation</h1>
+
+<form action="{{ path('blog_create') }}" method="post" {{ form_enctype(form) }}>
+    {% include 'EphpBlogBundle:Post:form.html.twig' with {'form': form} %}
+     <p>
+        <button type="submit" class="radius button">{{ 'button.create'|trans({}, 'EphpBlogBundle') }}</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('blog') }}" class="radius secondary button">{{ 'button.back'|trans({}, 'EphpBlogBundle') }}</a>
+    </li>
+</ul>
+{% endblock %}

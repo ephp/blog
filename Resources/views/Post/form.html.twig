@@ -1,0 +1,19 @@
+<table>
+    <tr>
+        <th>{{ form_label(form.title) }}</th>
+        <td>{{ form_widget(form.title) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.media) }}</th>
+        <td>{{ form_widget(form.media) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.body) }}</th>
+        <td>{{ form_widget(form.body) }}</td>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.url) }}</th>
+        <td>{{ form_widget(form.url) }}</td>
+    </tr>
+</table>
+{{ form_rest(form) }}

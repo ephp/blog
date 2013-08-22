@@ -1,0 +1,81 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<div class="blog-post"> 
+    {% if entity.isImg %}
+        <a href="{{ path('blog_show', { 'slug': entity.slug }) }}">
+            <img class="entry-img" src="{{ entity.media }}" alt="" width="880" height="300" border="0">
+        </a>
+    {% endif %}
+    {% if entity.isvideo %}
+        <iframe src="{{ entity.media }}" width="100%" height="300"></iframe>
+    {% endif %}
+    <div class="postdate">
+        <h3>20</h3>
+        <h6>Jan 2013</h6>
+    </div>
+    <div class="entry-title">
+        <h1 class="uppercase">{{ entity.title }}{% if app.user %} | <a href="{{ path('blog_edit', {'id': entity.id}) }}">Modifica</a>{% endif %}</h1>
+        <!-- POSTMETA BLCOK -->
+            <p class="postmeta">
+                {{ entity.createdAt|date('d-m-Y') }} | 
+                {% if false %} <a href="#">3 Comments</a> | {% endif %} 
+                scritto da <a href="#">{{ entity.user.nickname }}</a>
+            </p>
+        <!-- END POSTMETA BLCOK -->
+        <p class="entry-text">
+            {{ entity.body|nl2br }}
+        </p>
+    </div><hr>
+    <!-- SOCIAL BLOCK -->
+    <div class="social_block">
+        <h1>Share This Post</h1>
+        <ul class="pagination">
+            <li>
+                <div class="fb-btn">
+                    <div id="fb-root"></div>
+                    <script>(function(d, s, id) {
+                      var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id))
+                                return;
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "../../../connect.facebook.net/en_GB/all.js#xfbml=1&appId=364290536976994";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));
+                    </script>
+                    <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+                </div>
+            </li>
+            <li>
+                <div class="tweet-btn"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="creativusmouse" data-url="http://www.creativusmouse.com/Proteus/html_preview" data-text="Check this out">Tweet</a> 
+                    <script type="text/javascript" src="../../../platform.twitter.com/widgets.js"></script></div>
+            </li>
+            <li>
+                <div class="gplus-btn">
+                    <div class="g-plusone" data-size="medium"></div>
+                    <script type="text/javascript">
+                        (function() {
+                            var po = document.createElement('script');
+                            po.type = 'text/javascript';
+                            po.async = true;
+                            po.src = '../../../apis.google.com/js/plusone.js';
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
+                </div>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <!-- END SOCIAL BLOCK -->
+    <hr>
+</div>
+
+
+<a href="{{ path('blog') }}">
+    Torna indietro
+</a>
+{% endblock %}

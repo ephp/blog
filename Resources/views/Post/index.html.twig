@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Blog</h1>
+    {% if app.user %}
+            <a href="{{ path('blog_new') }}">
+                Nuovo
+            </a>
+    {% endif %}
+    {% for entity in entities %}
+    <div class="blog-post">
+        {% if entity.isImg %}
+            <a href="{{ path('blog_show', { 'slug': entity.slug }) }}">
+                <img class="entry-img" src="{{ entity.media }}" alt="" width="880" height="300" border="0">
+            </a>
+        {% endif %}
+        {% if entity.isvideo %}
+            <iframe src="{{ entity.media }}" width="100%" height="300"></iframe>
+        {% endif %}
+            <div class="postdate">
+                <h3>{{ entity.createdAt|date('d') }}</h3>
+                <h6>{{ entity.createdAt|date('M Y') }}</h6>
+            </div>
+            <div class="entry-title">
+                <h1 class="uppercase">{{ entity.title }}{% if app.user %} | <a href="{{ path('blog_edit', {'id': entity.id}) }}">Modifica</a>{% endif %}</h1>
+                <!-- POSTMETA BLCOK -->
+                <p class="postmeta">
+                    {{ entity.createdAt|date('d-m-Y') }} | 
+                    {% if false %} <a href="#">3 Comments</a> | {% endif %} 
+                    scritto da <a href="#">{{ entity.user.nickname }}</a>
+                </p>
+                <!-- END POSTMETA BLCOK -->
+                <p class="entry-text">{{ entity.body[:200] }}<br>
+                </p>
+                <a class="link-btn" href="{{ path('blog_show', { 'slug': entity.slug }) }}">Leggi tutto →</a> 
+            </div>
+        <hr>
+    </div>
+    {% endfor %}
+
+    {% if prev %}
+        <a class="link-btn" href="{{ path('blog', { 'pag': pag - 1 }) }}">Articoli precedenti</a> 
+    {% endif %}
+    {% if next %}
+        <a class="link-btn" href="{{ path('blog', { 'pag': pag + 1 }) }}">Articoli successivi</a> 
+    {% endif %}
+    
+    
+{% endblock %}

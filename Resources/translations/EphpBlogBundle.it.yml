@@ -1,0 +1,23 @@
+# Form field labels
+form:
+    title: Titolo
+    choice: Carica foto o condividi video
+    photo: Trascina una foto a selezionala dal tuo computer
+    video: Incolla condivisione video
+    body: Testo
+    url: Link
+    choices:
+        no: Nessun media
+        img: Carica foto
+        vid: Condividi video
+
+button:
+    create: Pubblica articolo
+    delete: Cancella articolo
+    update: Aggiorna articolo
+    nexts: Articoli successivi
+    prevs: Articoli precedenti
+    back: Torna indietro
+    next: Articolo successivo
+    prev: Articolo precedente
+    new: Nuovo articolo

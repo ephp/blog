@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h1>Post edit</h1>
+
+<form action="{{ path('blog_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <input type="hidden" name="_method" value="PUT" />
+    {% include 'EphpBlogBundle:Post:form.html.twig' with {'form': edit_form} %}
+    <p>
+        <button type="submit" class="radius button">{{ 'button.update'|trans({}, 'EphpBlogBundle') }}</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('blog') }}" class="radius secondary button">{{ 'button.back'|trans({}, 'EphpBlogBundle') }}</a>
+    </li>
+    <li>
+        <form action="{{ path('blog_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">{{ 'button.delete'|trans({}, 'EphpBlogBundle') }}</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
