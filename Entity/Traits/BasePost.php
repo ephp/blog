@@ -19,6 +19,14 @@ trait BasePost {
     private $media;
 
     /**
+     * @var \Ephp\ACLBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="Ephp\DragDropBundle\Entity\File")
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=true)
+     */
+    private $picture;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="body", type="text")
@@ -104,6 +112,27 @@ trait BasePost {
     }
 
     /**
+     * Set picture
+     *
+     * @param string $picture
+     * @return Post
+     */
+    public function setPicture($picture) {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return string 
+     */
+    public function getPicture() {
+        return $this->picture;
+    }
+
+    /**
      * Set url
      *
      * @param string $url
@@ -146,11 +175,11 @@ trait BasePost {
     }
 
     public function isImg() {
-        return $this->media && strpos($this->media, 'http://') === false && strpos($this->media, 'http://') === false;
+        return $this->media && $this->picture;
     }
     
     public function isVideo() {
-        return $this->media && strpos($this->media, 'http://') !== false && strpos($this->media, 'http://') !== false;
+        return $this->media && !$this->picture;
     }
     
 }

@@ -6,6 +6,7 @@ form:
     video: Incolla condivisione video
     body: Testo
     url: Link
+    categories: Categoria
     choices:
         no: Nessun media
         img: Carica foto

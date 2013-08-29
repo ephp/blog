@@ -32,6 +32,25 @@ class Post implements Interfaces\IPost {
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     private $user;
+    
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Category", cascade={"all"})
+     * @ORM\JoinTable(name="blog_posts_categories",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     * )
+     */
+    private $categories;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -63,4 +82,39 @@ class Post implements Interfaces\IPost {
         return $this->user;
     }
 
+    /**
+     * Add categories
+     *
+     * @param \Ephp\BlogBundle\Entity\Category $categories
+     * @return Post
+     */
+    public function addCategorie(\Ephp\BlogBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Ephp\BlogBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Ephp\BlogBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    //----------------------------------
 }
+    

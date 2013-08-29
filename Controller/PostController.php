@@ -23,6 +23,7 @@ class PostController extends Controller {
      * Lists all Post entities.
      *
      * @Route("/pag/{pag}", name="blog", defaults={"pag": 1})
+     * @Route("-{pag}", name="blog_index", defaults={"pag": 1})
      * @Method("GET")
      * @Template()
      */
@@ -51,11 +52,15 @@ class PostController extends Controller {
         $form->submit($request);
 
         if ($form->isValid()) {
+            if ($entity->getPicture()) {
+                $entity->setPicture($this->find('EphpDragDropBundle:File', $entity->getPicture()));
+            }
+            $entity->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('blog_index'));
+            return $this->redirect($this->generateUrl('blog'));
         }
 
         return array(
@@ -84,17 +89,15 @@ class PostController extends Controller {
     /**
      * Finds and displays a Post entity.
      *
-     * @Route("/{id}", name="blog_show")
+     * @Route("/{slug}", name="blog_show")
      * @Method("GET")
      * @Template()
      */
     public function showAction($slug) {
         $entity = $this->findOneBy('EphpBlogBundle:Post', array('slug' => $slug));
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
-
         return array(
             'entity' => $entity,
         );
@@ -148,7 +151,7 @@ class PostController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('blog_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('blog'));
         }
 
         return array(

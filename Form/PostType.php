@@ -34,16 +34,16 @@ class PostType extends AbstractType {
                     'expanded' => true,
                     'attr' => array(
                         'class' => 'inline',
-                        ),
+                    ),
                 ))
-                ->add('photo', 'file', array(
-                    'mapped' => false,
-                    'label' => 'form.photo',
+                ->add('picture', 'hidden', array(
+                    'required' => false,
                     'translation_domain' => 'EphpBlogBundle',
                 ))
                 ->add('video', 'text', array(
                     'mapped' => false,
                     'label' => 'form.video',
+                    'required' => false,
                     'translation_domain' => 'EphpBlogBundle',
                 ))
                 ->add('body', null, array(
@@ -53,6 +53,20 @@ class PostType extends AbstractType {
                 ->add('url', null, array(
                     'label' => 'form.url',
                     'translation_domain' => 'EphpBlogBundle',
+                ))
+                ->add('categories', null, array(
+                    'label' => 'form.categories',
+                    'translation_domain' => 'EphpBlogBundle',
+                    'expanded' => true,
+                    'query_builder' => function(\Ephp\BlogBundle\Entity\CategoryRepository $er) {
+                        return $er->createQueryBuilder('c')
+                                ->where('c.show = :show')
+                                ->setParameter('show', true)
+                                ->orderBy('c.name', 'ASC');
+                    },
+                    'attr' => array(
+                        'class' => 'inline',
+                    ),
                 ))
         ;
     }
@@ -70,7 +84,7 @@ class PostType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'ephp_blogbundle_posttype';
+        return 'post';
     }
 
 }
