@@ -36,13 +36,79 @@ class PostController extends Controller {
             'pag' => $pag,
             'next' => count($entities_next) == 1,
             'prev' => $pag > 1,
+            'route' => 'blog',
+            'route_param_prev' => array('pag' => $pag - 1),
+            'route_param_next' => array('pag' => $pag + 1),
+        );
+    }
+
+    /**
+     * Lists all Post entities.
+     *
+     * @Route("-archive/{month}/{year}/{pag}", name="blog_archive", defaults={"pag": 1})
+     * @Method("GET")
+     * @Template("EphpBlogBundle:Post:index.html.twig")
+     */
+    public function archiveAction($month, $year, $pag) {
+        $entities = $this->findBy('EphpBlogBundle:Post', array('month' => $month, 'year' => $year), array('createdAt' => 'DESC'), 10, ($pag - 1) * 10);
+        $entities_next = $this->findBy('EphpBlogBundle:Post', array('month' => $month, 'year' => $year), array('createdAt' => 'DESC'), 1, ($pag) * 10);
+
+        return array(
+            'entities' => $entities,
+            'pag' => $pag,
+            'next' => count($entities_next) == 1,
+            'prev' => $pag > 1,
+            'route' => 'blog_archive',
+            'route_param_prev' => array('month' => $month, 'year' => $year, 'pag' => $pag - 1),
+            'route_param_next' => array('month' => $month, 'year' => $year, 'pag' => $pag + 1),
+        );
+    }
+
+    /**
+     * Lists all Post entities.
+     *
+     * @Route("-category/{name}/{pag}", name="blog_category", defaults={"pag": 1})
+     * @Method("GET")
+     * @Template("EphpBlogBundle:Post:index.html.twig")
+     */
+    public function categoryAction($name, $pag) {
+        $category = $this->findOneBy('EphpBlogBundle:Category', array('name' => $name));
+        $entities = $this->getRepository('EphpBlogBundle:Post')->category($category->getId(), 10, ($pag - 1) * 10);
+        $entities_next = $this->getRepository('EphpBlogBundle:Post')->category($category->getId(), 1, ($pag) * 10);
+
+        return array(
+            'entities' => $entities,
+            'pag' => $pag,
+            'next' => count($entities_next) == 1,
+            'prev' => $pag > 1,
+            'route' => 'blog_category',
+            'route_param_prev' => array('name' => $name, 'pag' => $pag - 1),
+            'route_param_next' => array('name' => $name, 'pag' => $pag + 1),
+        );
+    }
+
+    /**
+     * Lists all Post entities.
+     *
+     * @Route("-column", name="blog_column")
+     * @Template()
+     */
+    public function columnAction() {
+        $lasts = $this->findBy('EphpBlogBundle:Post', array(), array('createdAt' => 'DESC'), 3);
+        $categories = $this->getRepository('EphpBlogBundle:Post')->categories();
+        $archives = $this->getRepository('EphpBlogBundle:Post')->archive();
+
+        return array(
+            'lasts' => $lasts,
+            'categories' => $categories,
+            'archives' => $archives,
         );
     }
 
     /**
      * Creates a new Post entity.
      *
-     * @Route("/", name="blog_create")
+     * @Route("-create/", name="blog_create")
      * @Method("POST")
      * @Template("EphpBlogBundle:Post:new.html.twig")
      */
@@ -56,9 +122,7 @@ class PostController extends Controller {
                 $entity->setPicture($this->find('EphpDragDropBundle:File', $entity->getPicture()));
             }
             $entity->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->persist($entity);
 
             return $this->redirect($this->generateUrl('blog'));
         }
@@ -130,7 +194,7 @@ class PostController extends Controller {
     /**
      * Edits an existing Post entity.
      *
-     * @Route("/{id}", name="blog_update")
+     * @Route("-update/{id}", name="blog_update")
      * @Method("PUT")
      * @Template("EphpBlogBundle:Post:edit.html.twig")
      */
@@ -164,7 +228,7 @@ class PostController extends Controller {
     /**
      * Deletes a Post entity.
      *
-     * @Route("/{id}", name="blog_delete")
+     * @Route("-delete/{id}", name="blog_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id) {

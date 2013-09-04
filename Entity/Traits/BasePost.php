@@ -39,6 +39,20 @@ trait BasePost {
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="month", type="integer")
+     */
+    private $month;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="year", type="integer")
+     */
+    private $year;
 
     /**
      * @var string
@@ -173,7 +187,50 @@ trait BasePost {
     public function getSlug() {
         return $this->slug;
     }
+    
+    /**
+     * Set year
+     *
+     * @param integer $year
+     * @return Post
+     */
+    public function setYear($year) {
+        $this->year = $year;
 
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer 
+     */
+    public function getYear() {
+        return $this->year;
+    }
+    
+    /**
+     * Set month
+     *
+     * @param integer $month
+     * @return Post
+     */
+    public function setMonth($month) {
+        $this->month = $month;
+
+        return $this;
+    }
+
+    /**
+     * Get month
+     *
+     * @return integer 
+     */
+    public function getMonth() {
+        return $this->month;
+    }
+
+    
     public function isImg() {
         return $this->media && $this->picture;
     }
@@ -182,4 +239,12 @@ trait BasePost {
         return $this->media && !$this->picture;
     }
     
+    /**
+     * @ORM\PrePersist 
+     */
+    public function prePersist() {
+        $now = new \DateTime('now');
+        $this->year = $now->format('Y');
+        $this->month = $now->format('m');
+    }
 }

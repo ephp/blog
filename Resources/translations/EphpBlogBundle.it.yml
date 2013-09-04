@@ -22,3 +22,37 @@ button:
     next: Articolo successivo
     prev: Articolo precedente
     new: Nuovo articolo
+    
+month:
+    m1: Gennaio
+    m2: Febbraio
+    m3: Marzo
+    m4: Aprile
+    m5: Maggio
+    m6: Giugno
+    m7: Luglio
+    m8: Agosto
+    m9: Settembre
+    m10: Ottobre
+    m11: Novembre
+    m12: Dicembre
+    s1: Gen
+    s2: Feb
+    s3: Mar
+    s4: Apr
+    s5: Mag
+    s6: Giu
+    s7: Lug
+    s8: Ago
+    s9: Set
+    s10: Ott
+    s11: Nov
+    s12: Dic
+   
+text:
+    archive: Archivio
+    categories: Categorie
+    last_posts: Ultimi articoli
+    posts: Articoli
+    sposts: art.
+    

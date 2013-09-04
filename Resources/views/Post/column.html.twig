@@ -1,0 +1,35 @@
+<!-- SIDEBAR -->
+<div class="sidebar three columns">
+    <h2 class="sb-header">Latest Posts</h2>
+    {% for entity in lasts %}
+    <p>
+        <a href="{{ path('blog_show', { 'slug': entity.slug }) }}">
+            <div class="postdate">
+                <h3>{{ entity.createdAt|date('d') }}</h3>
+                <h6>{{ entity.createdAt|date('M Y') }}</h6>
+            </div>
+            <strong>{{ entity.title }}</strong><br>
+            by {{ entity.user.username }}
+        </a> 
+    </p>
+    {% endfor %}
+    <div class="divider3"></div>
+    <h2 class="sb-header"> Blog Categories </h2>
+    <div class="list-type-sidebar">
+        <ul>
+            {% for category in categories %}
+                <li><a href="#">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="divider3"></div>
+    <h2 class="sb-header"> Archive </h2>
+    <div class="list-type-sidebar">
+        <ul>
+            {% for archive in archives %}
+                <li><a href="#">{{ archive.month }} {{ archive.year }} ({{ archive.n }})</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<!-- END SIDEBAR --> 

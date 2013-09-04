@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="blog_posts")
  * @ORM\Entity(repositoryClass="Ephp\BlogBundle\Entity\PostRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Post implements Interfaces\IPost {
 
